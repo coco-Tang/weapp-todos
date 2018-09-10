@@ -1,0 +1,28 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="header">
+    <image class="plus" src="../../assets/plus.png"></image>
+    <input class="new-todo" value="{{ name }}" placeholder="Anything here..." 
+    bindinput="getTodoHandler" bindconfirm="addTodoHandler" focus/>
+  </view>
+  <block wx:if="{{ list.length > 0 }}">
+    <view class="todos">
+      <view class="item{{ item.completed ? ' completed' : '' }}" wx:for="{{ list }}" wx:key="index" data-index="{{ index }} " bindtap="changeCheckedHandler">
+        <icon class="checkbox" type="{{item.completed ? 'success' : 'circle'}}"></icon>
+        <text class="name">{{ item.name }}</text>
+        <icon class="remove" type="clear" size="16" catchtap="delTodoHandler" data-index="{{ index }}"></icon>
+      </view>
+      <view class="footer">
+        <text class="btn" bindtap="toggleAll">Toggle all</text>
+        <text hidden="{{ !leftCount }}">{{ leftCount }} {{ leftCount <= 1 ? 'item' : 'items' }} left</text>
+        <text class="btn" hidden="{{ leftCount === list.length }}" bindtap="clearCompletedHandler">Clear completed</text>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="empty">
+      <text class="title">Congratulations!</text>
+      <text class="content">There's no more work left</text>
+    </view>
+  </block>
+</view>
